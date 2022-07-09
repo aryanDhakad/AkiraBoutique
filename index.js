@@ -155,7 +155,6 @@ app.post("/doneOrder", (req, res) => {
 })
 
 app.post("/placeOrder", (req, res) => {
-    console.log(req.body);
     const {
         userId,
         quantity,
