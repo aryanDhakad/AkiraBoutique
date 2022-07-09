@@ -1,0 +1,163 @@
+<%- include('partials/header') %>
+
+
+
+    <!-- user information -->
+
+    <button type="button" class="btn btn-primary placeOrderBtn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Place Order
+      </button>
+     
+      
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <form action="/placeOrder" method="post">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Place New Order</h5>
+              <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              
+    
+    <div class="form-group mb-3">
+        <h4 for="quantity">Quantity</h4>
+        <input type="number" class="form-control" name="quantity"  placeholder="Enter quantity">
+    </div>
+    
+    <div class="form-group mb-3">
+        <h4>Types</h4>
+        
+        <% types.forEach(type => { %>
+            <div class="mx-1">
+            <input type="radio" class="" name="type" value="<%= JSON.stringify(type) %> "autocomplete="off" >
+                 <label class="" for="type"><%= type.Type %></label>
+                </div>
+        <% }) %>
+   
+    </div>
+    
+    
+    <div class="form-group mb-3">
+        <h4 for="type">Till When do you want it?</h4>
+        <input type="date" class="form-control" name="dueDate" placeholder="DueDate">
+    
+    </div>
+    
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button class="btn btn-primary" name="userId" type="submit" value="<%= user._id %>">Place Order</button>
+            </div>
+          </div>
+        </div>
+    </form>
+      </div>
+
+    <div class="row">
+        <div class="col-4">
+            <div class=" mt-4 mb-4 p-2 d-flex justify-content-center">
+                <div class="card p-2">
+                    <div class=" image d-flex flex-column justify-content-center align-items-center">
+                        <button class="btn btn-secondary">
+                            <img src="https://i.imgur.com/wvxPV9S.png" height="100" width="100" />
+                        </button> <span class="name mt-3">
+                            <%= user.Name %>
+                        </span>
+                        <span class="idd">
+                            <%= user.Email %>
+        
+                        </span>
+                        <div class="d-flex flex-row justify-content-center align-items-center gap-2"> <span class="idd1">
+                                <%= user.Phone %>
+                            </span>
+                            <span><i class="fa fa-phone">
+                                </i>
+                            </span>
+                        </div>
+        
+                        <div class=" d-flex mt-2"> <button class="btn1 btn-dark">Edit Profile
+                            </button>
+                        </div>
+                        <div class="text mt-3"> <span>
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae commodi animi eveniet nam dolor maiores officiis voluptatem reiciendis ad placeat.
+                            </span>
+                        </div>
+                        <form action="/" method="get">
+                        <button class="btn btn-danger" type="submit">Exit</button>
+                    </form>
+                        
+                        <div class=" px-2 rounded mt-4 date "> <span class="join">Joined May,2021
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+
+    
+        <div class="col-6">
+
+           
+            <!-- Button trigger modal -->
+
+
+
+    <div class="d-flex  flex-wrap flex-start">
+        
+            <% user.Orders.forEach(element => { %>
+
+                <form action="/deleteOrder" method="post">
+                <div class="card m-1" style="width: 18rem;">
+                    <div class="card-body">
+                      <h5 class="card-title">
+                        <% if (element.Status === true) { %>
+                            <h3>Completed!</h3>
+                          <% } %>
+                             
+                            <% if (element.Status === false) { %>
+                             <h3>Order Pending</h3>
+                            <% } %>
+                      </h5>
+                      
+                      <div class="card-text">
+                        <div class="row">
+                            <div class="col-6">
+                                <p>Cost :  <%= element.Cost %>  </p>
+                                <p>Quantity :  <%= element.Quantity %>  </p>
+                                <% if (element.Status === true) { %>
+                                   <button class="btn btn-success rounded">Collect</button>
+                                  <% } %>
+                                     
+                                    <% if (element.Status === false) { %>
+                                        <button type="submit" class="btn btn-danger rounded" name="orderId" value=<%= element._id %>>Delete Order</button>
+                                    <% } %>
+                               
+                            </div>
+                            <div class="col-6">
+                                <p>Type:  <%= element.Type%>  </p>
+                                <p>Due Date:  <%= new Date(element.DueDate).toLocaleString() %>  </p>
+                            </div>
+                        </div>
+                       
+                       
+                      </div>
+                      <input type="text" hidden name="userId" value=<%= user._id %>>
+                      
+                    </div>
+                  </div>
+                </form>
+                
+            <% }) %>
+        
+        </div>
+
+        </div>
+    </div>
+  
+
+    <%- include('partials/footer') %>

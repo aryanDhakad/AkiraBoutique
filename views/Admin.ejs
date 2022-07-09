@@ -1,0 +1,146 @@
+<%- include('partials/header') %>
+
+
+
+    <!-- user information -->
+
+    <button type="button" class="btn btn-primary placeOrderBtn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+       Add Type
+      </button>
+     
+      
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <form action="/addType" method="post">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Add New Type</h5>
+              <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              
+    
+    <div class="form-group">
+        <label for="quantity">Cost</label>
+        <input type="text" class="form-control" name="cost"  placeholder="Enter cost per item">
+    </div>
+    
+    <div class="form-group">
+        <label for="type">Type</label>
+        <input type="text" class="form-control" name="type" placeholder="Enter Type">
+    
+    </div>
+    
+    
+    
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button class="btn btn-primary" name="" type="submit" >Add Type</button>
+            </div>
+          </div>
+        </div>
+    </form>
+      </div>
+
+    <div class="row">
+        <div class="col-4">
+          <div class=" mt-4 mb-4 p-2 d-flex flex-wrap flex-start">
+               
+            <% types.forEach(type => { %>
+             <form action="/deleteType" method="post">
+                <div class="m-3 p-3">
+                    <h4>Cost : <%= type.Cost %>  </h4>
+                    <h4>Type : <%= type.Type %>  </h4>
+
+                    <button class="btn btn-danger" name="typeId" type="submit" value=<%= type._id %>  >
+                        Delete
+                    </button>
+                  
+                </div>
+            </form>
+
+            <% }) %>
+               
+
+            </div>
+        </div>
+        
+
+
+    
+        <div class="col-6">
+
+           
+            <!-- Button trigger modal -->
+
+
+
+   
+
+
+        <% users.forEach(user => { %>
+            <h3 class="text-center"> Name : <%= user.Name %>  |
+                 Phone : <%= user.Phone %>  |
+                 Email : <%= user.Email %>  </h3>
+         
+                
+
+
+                <div class="d-flex justify-content-center align-items-center flex-wrap flex-start">
+            <% user.Orders.forEach(element => { %>
+
+                
+                <div class="card m-1" style="width: 15rem;">
+                    <div class="card-body">
+                      <h5 class="card-title">
+                        <% if (element.Status === true) { %>
+                            <h3>Completed!</h3>
+                          <% } %>
+                             
+                            <% if (element.Status === false) { %>
+                             <h3>Order Pending</h3>
+                            <% } %>
+                      </h5>
+                      
+                      <div class="card-text">
+                        <div class="row">
+                            <div class="col-6">
+                                <p>Cost :  <%= element.Cost %>  </p>
+                                <p>Quantity :  <%= element.Quantity %>  </p>
+                            </div>
+                            <div class="col-6">
+                                <p>Type:  <%= element.Type%>  </p>
+                                <p>Due Date:  <%= new Date(element.DueDate).toLocaleString() %>  </p>
+                            </div>
+                        </div>
+                       
+                       
+                      </div>
+                      <form action="/deleteOrderAdmin" method="post">
+                      <input type="text" hidden name="userId" value=<%= user._id %>>
+                      <button type="submit" class="btn btn-danger rounded" name="orderId" value=<%= element._id %>>Delete Order</button>
+                    </form>
+                      <form action="/doneOrder" method="post">
+                        <input type="text" hidden name="userId" value=<%= user._id %>>
+                      <button type="submit" class="btn btn-success rounded" name="orderId" value=<%= element._id %> >Done</button>
+                    </form>
+                    </div>
+                  </div>
+               
+                
+            <% }) %>
+        <% }) %>
+
+        
+            
+        
+        </div>
+
+        </div>
+    </div>
+  
+
+    <%- include('partials/footer') %>
