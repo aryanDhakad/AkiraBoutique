@@ -4,7 +4,7 @@
 
     <!-- user information -->
 
-    <button type="button" class="btn btn-primary placeOrderBtn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    <button type="button" class="btn btn-primary placeOrderBtn " style="z-index: 10;" data-bs-toggle="modal" data-bs-target="#exampleModal">
        Add Type
       </button>
      
@@ -46,7 +46,7 @@
       </div>
 
     <div class="row">
-        <div class="col-4">
+        <div class="col-md-4 col-sm-12">
           <div class=" mt-4 mb-4 p-2 d-flex flex-wrap flex-start">
                
             <% types.forEach(type => { %>
@@ -71,7 +71,7 @@
 
 
     
-        <div class="col-6">
+        <div class="col-md-8 col-sm-12">
 
            
             <!-- Button trigger modal -->
@@ -82,6 +82,7 @@
 
 
         <% users.forEach(user => { %>
+          <div class="my-5 ">
             <h3 class="text-center"> Name : <%= user.Name %>  |
                  Phone : <%= user.Phone %>  |
                  Email : <%= user.Email %>  </h3>
@@ -89,7 +90,7 @@
                 
 
 
-                <div class="d-flex justify-content-center align-items-center flex-wrap flex-start">
+                <div class="d-flex  flex-wrap flex-start">
             <% user.Orders.forEach(element => { %>
 
                 
@@ -132,12 +133,13 @@
                
                 
             <% }) %>
+          </div>
         <% }) %>
 
         
-            
+            </div>
         
-        </div>
+      
 
         </div>
     </div>
